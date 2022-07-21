@@ -17,7 +17,14 @@
 		<form on:submit|preventDefault={register}>
 			<div class="form">
 				<Textfield variant="outlined" bind:value={email} label="Email" type="email" required />
-				<Textfield variant="outlined" bind:value={password} label="Password" type="password" required input$minlength={15} />
+				<Textfield
+					variant="outlined"
+					bind:value={password}
+					label="Password"
+					type="password"
+					required
+					input$minlength={15}
+				/>
 				<div>
 					<Button type="submit" variant="raised">Register</Button>
 				</div>
