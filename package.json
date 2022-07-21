@@ -16,6 +16,7 @@
 	},
 	"devDependencies": {
 		"@smui/button": "^6.0.0-beta.16",
+		"@smui/card": "^6.0.0-beta.16",
 		"@smui/textfield": "^6.0.0-beta.16",
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "next",
