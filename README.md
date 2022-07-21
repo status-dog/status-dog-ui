@@ -4,7 +4,7 @@
 
 ## CSS
 
-If you add material ui components or to something with the themes run `npm run theme`
+If you add material ui components or to something with the themes run `npm run prepare`
 
 ## Run dev
 
