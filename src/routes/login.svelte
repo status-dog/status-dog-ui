@@ -5,16 +5,16 @@
 
 	let email = '';
 	let password = '';
-	function register() {
-		console.info('register');
+	function login() {
+		console.info('login');
 	}
 </script>
 
-<div class="registerContainer">
+<div class="loginContainer">
 	<Card padded>
-		<h1>Register</h1>
+		<h1>Sign Up</h1>
 
-		<form on:submit|preventDefault={register}>
+		<form on:submit|preventDefault={login}>
 			<div class="form">
 				<Textfield variant="outlined" bind:value={email} label="Email" type="email" required />
 				<Textfield
@@ -26,7 +26,7 @@
 					input$minlength={15}
 				/>
 				<div>
-					<Button type="submit" variant="raised">Register</Button>
+					<Button type="submit" variant="raised">Login</Button>
 				</div>
 			</div>
 		</form>
@@ -34,7 +34,7 @@
 </div>
 
 <style>
-	.registerContainer {
+	.loginContainer {
 		margin-left: auto;
 		margin-right: auto;
 		width: 500px;
