@@ -4,7 +4,6 @@
 	import Textfield from '@smui/textfield';
 
 	let email = '';
-	let password = '';
 	function login() {
 		console.info('login');
 	}
@@ -17,14 +16,6 @@
 		<form on:submit|preventDefault={login}>
 			<div class="form">
 				<Textfield variant="outlined" bind:value={email} label="Email" type="email" required />
-				<Textfield
-					variant="outlined"
-					bind:value={password}
-					label="Password"
-					type="password"
-					required
-					input$minlength={15}
-				/>
 				<div>
 					<Button type="submit" variant="raised">Login</Button>
 				</div>

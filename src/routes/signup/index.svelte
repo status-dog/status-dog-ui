@@ -4,8 +4,16 @@
 	import Textfield from '@smui/textfield';
 
 	let email = '';
-	let password = '';
-	function signUp() {
+
+	async function signUp() {
+		const response = await fetch('/signup/generate-registration-options', {
+			method: 'POST',
+			credentials: 'same-origin',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ meep: 'blubb' })
+		});
 		console.info('sign up');
 	}
 </script>
@@ -17,14 +25,6 @@
 		<form on:submit|preventDefault={signUp}>
 			<div class="form">
 				<Textfield variant="outlined" bind:value={email} label="Email" type="email" required />
-				<Textfield
-					variant="outlined"
-					bind:value={password}
-					label="Password"
-					type="password"
-					required
-					input$minlength={15}
-				/>
 				<div>
 					<Button type="submit" variant="raised">Sign up</Button>
 				</div>
