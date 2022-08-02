@@ -26,7 +26,7 @@ export const POST: RequestHandler<
 			body: 'A user with that email already exists.'
 		};
 	}
-	const userId = await generateUserId()
+	const userId = await generateUserId();
 
 	const options = generateRegistrationOptions({
 		rpName,
