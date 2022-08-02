@@ -23,7 +23,7 @@ export const POST: RequestHandler<
 	if (await existsUser(params.email)) {
 		return {
 			status: 409,
-			body: 'A user with that email already exists.'
+			body: 'A user with that email already exists.',
 		};
 	}
 	const userId = await generateUserId();
@@ -35,7 +35,7 @@ export const POST: RequestHandler<
 		userName: params.email,
 		// Don't prompt users for additional information about the authenticator
 		// (Recommended for smoother UX)
-		attestationType: 'indirect'
+		attestationType: 'indirect',
 
 		// Prevent users from re-registering existing authenticators
 		// excludeCredentials: userAuthenticators.map((authenticator) => ({
