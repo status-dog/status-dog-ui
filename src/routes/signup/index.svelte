@@ -12,7 +12,7 @@
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({ meep: 'blubb' })
+			body: JSON.stringify({ email })
 		});
 		console.info('sign up');
 	}
