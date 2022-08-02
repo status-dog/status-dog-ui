@@ -3,7 +3,7 @@ import { generateRegistrationOptions } from '@simplewebauthn/server';
 import { rpID, rpName, type Authenticator, type UserModel } from '$lib/webauthn/models';
 import type { PublicKeyCredentialCreationOptionsJSON } from '@simplewebauthn/typescript-types';
 
-function getUserFromDB(email: String): UserModel {
+function getUserFromDB(email: string): UserModel {
 	return {
 		id: '1',
 		username: 'ralph',
