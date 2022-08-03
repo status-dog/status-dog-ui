@@ -14,9 +14,15 @@
 html,
 body {
 	background-color: #0f1011;
+	background-color: theme.$background;
 	color: theme.$on-surface;
 }
 
+body {
+	font-family: 'Roboto', sans-serif;
+	padding: 0;
+	margin: 0;
+}
 a {
 	color: #40b3ff;
 }

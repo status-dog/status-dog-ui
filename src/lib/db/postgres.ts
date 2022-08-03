@@ -9,16 +9,15 @@ export const pool = new Pool({
 	port: 5432,
 });
 
-
 export async function doWithoutTransaction<T>(dbCode: (client: ClientBase) => Promise<T>) {
 	const connnection = await pool.connect();
 	try {
 		const result = await dbCode(connnection);
 		return result;
-	} catch(e) {
-		console.trace("DB operation failed.", e)
+	} catch (e) {
+		console.trace('DB operation failed.', e);
 		throw e;
-	}finally {
+	} finally {
 		connnection.release();
 	}
 }
@@ -26,15 +25,15 @@ export async function doWithoutTransaction<T>(dbCode: (client: ClientBase) => Pr
 export async function doWithTransaction<T>(dbCode: (client: ClientBase) => Promise<T>) {
 	const connnection = await pool.connect();
 	try {
-		await connnection.query("BEGIN");
+		await connnection.query('BEGIN');
 		const result = await dbCode(connnection);
-		await connnection.query("COMMIT");
+		await connnection.query('COMMIT');
 		return result;
-	} catch(e) {
-		connnection.query("ROLLBACK");
-		console.trace("DB operation failed.", e)
+	} catch (e) {
+		connnection.query('ROLLBACK');
+		console.trace('DB operation failed.', e);
 		throw e;
-	}finally {
+	} finally {
 		connnection.release();
 	}
 }
