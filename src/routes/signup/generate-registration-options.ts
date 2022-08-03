@@ -9,12 +9,12 @@ function setUserCurrentChallenge(user: UserModel, challenge: string) {
 	console.info('TODO');
 }
 
-interface CreationOptionsParams extends Record<string, string> {
+interface CreationOptionsParams {
 	email: string;
 }
 
 export const POST: RequestHandler<
-	CreationOptionsParams,
+	Record<string, string>,
 	PublicKeyCredentialCreationOptionsJSON | string
 > = async ({ request }) => {
 	const params: CreationOptionsParams = await request.json();
