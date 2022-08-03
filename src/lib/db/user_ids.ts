@@ -1,4 +1,4 @@
-import { doWithoutTransaction, pool } from '$lib/db/postgres';
+import { doWithoutTransaction } from '$lib/db/postgres';
 
 export async function generateUserId(): Promise<number> {
 	console.info('Generating user id');
