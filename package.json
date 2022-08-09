@@ -39,8 +39,8 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@simplewebauthn/browser": "^5.4.0",
-		"@simplewebauthn/server": "^5.4.0",
+		"@simplewebauthn/browser": "^5.4.1",
+		"@simplewebauthn/server": "^5.4.1",
 		"pg": "^8.7.3"
 	}
 }
