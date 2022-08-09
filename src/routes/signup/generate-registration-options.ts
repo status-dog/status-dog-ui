@@ -4,6 +4,7 @@ import { rpID, rpName, type Authenticator, type UserModel } from '$lib/webauthn/
 import type { PublicKeyCredentialCreationOptionsJSON } from '@simplewebauthn/typescript-types';
 import { existsUser } from '$lib/db/user-repo';
 import { generateUserId } from '$lib/db/user_ids';
+import { persistRegistration } from '$lib/db/pending-registrations-repo';
 
 function setUserCurrentChallenge(user: UserModel, challenge: string) {
 	console.info('TODO');
@@ -36,6 +37,7 @@ export const POST: RequestHandler<
 		// Don't prompt users for additional information about the authenticator
 		// (Recommended for smoother UX)
 		attestationType: 'indirect',
+		timeout: 1000 * 60 * 5,
 
 		// Prevent users from re-registering existing authenticators
 		// excludeCredentials: userAuthenticators.map((authenticator) => ({
@@ -47,7 +49,11 @@ export const POST: RequestHandler<
 		// ))
 	});
 
-	// TODO
-	//setUserCurrentChallenge(user, options.challenge);
+	await persistRegistration({
+		id: userId,
+		email: params.email,
+		challenge: options.challenge,
+	});
+
 	return { status: 200, body: options };
 };
