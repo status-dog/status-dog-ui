@@ -30,7 +30,7 @@ export async function doWithTransaction<T>(dbCode: (client: ClientBase) => Promi
 		await connnection.query('COMMIT');
 		return result;
 	} catch (e) {
-		connnection.query('ROLLBACK');
+		await connnection.query('ROLLBACK');
 		console.trace('DB operation failed.', e);
 		throw e;
 	} finally {
