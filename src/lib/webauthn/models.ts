@@ -1,3 +1,5 @@
+import type { AuthenticatorTransportFuture } from '@simplewebauthn/typescript-types';
+
 // Human-readable title for your website
 export const rpName = 'status dog';
 
@@ -9,12 +11,6 @@ export const rpID = 'localhost';
 // TODO: read from env
 export const statusDogOrigin = `http://${rpID}:5173`;
 
-export type UserModel = {
-	id: string;
-	username: string;
-	currentChallenge?: string;
-};
-
 /**
  * It is strongly advised that authenticators get their own DB
  * table, ideally with a foreign key to a specific UserModel.
@@ -24,6 +20,9 @@ export type UserModel = {
  * in subsequent authentications.
  */
 export type Authenticator = {
+	id: number;
+
+	name: string;
 	// SQL: Encode to base64url then store as `TEXT`. Index this column
 	credentialID: Buffer;
 	// SQL: Store raw bytes as `BYTEA`/`BLOB`/etc...
@@ -32,5 +31,7 @@ export type Authenticator = {
 	counter: number;
 	// SQL: `VARCHAR(255)` and store string array as a CSV string
 	// ['usb' | 'ble' | 'nfc' | 'internal']
-	transports?: AuthenticatorTransport[];
+	transports?: AuthenticatorTransportFuture[];
 };
+
+export type NewAuthenticator = Omit<Authenticator, 'id'>;

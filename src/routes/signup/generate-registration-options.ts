@@ -1,6 +1,6 @@
 import type { RequestHandler } from '@sveltejs/kit';
 import { generateRegistrationOptions } from '@simplewebauthn/server';
-import { rpID, rpName, type Authenticator, type UserModel } from '$lib/webauthn/models';
+import { rpID, rpName } from '$lib/webauthn/models';
 import type { PublicKeyCredentialCreationOptionsJSON } from '@simplewebauthn/typescript-types';
 import { existsUser } from '$lib/db/user-repo';
 import { generateUserId } from '$lib/db/user_ids';
