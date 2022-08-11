@@ -18,7 +18,7 @@
 		<div class="actions-wrapper">
 			<div class="actions">
 				<Button on:click={signIn} variant="raised">Sign in</Button>
-				<Button on:click={signUp} variant="raised">Sign up</Button>
+				<Button on:click={signUp} variant="outlined">Sign up</Button>
 			</div>
 		</div>
 	</Card>
