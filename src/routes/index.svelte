@@ -14,7 +14,7 @@
 
 <div class="signUpContainer">
 	<Card padded>
-		<h1>Welcome to Status dog</h1>
+		<h1 class="header">Welcome to Status dog</h1>
 		<div class="actions-wrapper">
 			<div class="actions">
 				<Button on:click={signIn} variant="raised">Sign in</Button>
@@ -25,10 +25,14 @@
 </div>
 
 <style>
+	.header {
+		white-space: pre-wrap;
+	}
 	.signUpContainer {
 		margin-left: auto;
 		margin-right: auto;
-		width: 500px;
+		max-width: 500px;
+		width: 90%;
 		height: 100vh;
 		display: flex;
 		flex-direction: column;

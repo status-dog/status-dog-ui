@@ -79,7 +79,8 @@
 	.signUpContainer {
 		margin-left: auto;
 		margin-right: auto;
-		width: 500px;
+		max-width: 500px;
+		width: 90%;
 		height: 100vh;
 		display: flex;
 		flex-direction: column;
