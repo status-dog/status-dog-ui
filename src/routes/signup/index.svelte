@@ -3,31 +3,40 @@
 	import Card from '@smui/card';
 	import Textfield from '@smui/textfield';
 	import { startRegistration } from '@simplewebauthn/browser';
+	import type { PublicKeyCredentialCreationOptionsJSON } from '@simplewebauthn/typescript-types';
+	import type { CreationOptionsParams } from '$lib/signup/model';
 
 	let email = '';
 	let error: string | undefined = undefined;
 
 	async function signUp() {
 		error = undefined;
+		const optionsRequestBody: CreationOptionsParams = { email };
 		const optionsResponse = await fetch('/signup/generate-registration-options', {
 			method: 'POST',
 			credentials: 'same-origin',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ email }),
+			body: JSON.stringify(optionsRequestBody),
 		});
 
 		if (optionsResponse.status === 200) {
 			try {
-				const attResponse = await startRegistration(await optionsResponse.json());
+				const options: PublicKeyCredentialCreationOptionsJSON = await optionsResponse.json();
+				console.info(options.user);
+				const attResponse = await startRegistration(options);
+				const requestBody = {
+					user: options.user,
+					attResponse,
+				};
 				const verificationReponse = await fetch('/signup/verify-registration', {
 					method: 'POST',
 					credentials: 'same-origin',
 					headers: {
 						'Content-Type': 'application/json',
 					},
-					body: JSON.stringify(attResponse),
+					body: JSON.stringify(requestBody),
 				});
 				const verificationJSON = await verificationReponse.json();
 				console.log(verificationJSON);

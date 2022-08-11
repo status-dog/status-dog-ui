@@ -2,10 +2,12 @@
 export const rpName = 'status dog';
 
 // A unique identifier for your website
+// TODO read from env
 export const rpID = 'localhost';
 
 // The URL at which registrations and authentications should occur
-export const origin = `https://${rpID}`;
+// TODO: read from env
+export const statusDogOrigin = `http://${rpID}:5173`;
 
 export type UserModel = {
 	id: string;

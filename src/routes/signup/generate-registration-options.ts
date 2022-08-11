@@ -5,17 +5,14 @@ import type { PublicKeyCredentialCreationOptionsJSON } from '@simplewebauthn/typ
 import { existsUser } from '$lib/db/user-repo';
 import { generateUserId } from '$lib/db/user_ids';
 import { persistRegistration } from '$lib/db/pending-registrations-repo';
-
-interface CreationOptionsParams {
-	email: string;
-}
+import type { CreationOptionsParams } from '$lib/signup/model';
 
 export const POST: RequestHandler<
 	Record<string, string>,
 	PublicKeyCredentialCreationOptionsJSON | string
 > = async ({ request }) => {
 	const params: CreationOptionsParams = await request.json();
-	console.info('Generating registration options for', params);
+	console.info('Generating registration options');
 
 	if (await existsUser(params.email)) {
 		return {
@@ -25,7 +22,7 @@ export const POST: RequestHandler<
 	}
 	const userId = await generateUserId();
 
-	const options = generateRegistrationOptions({
+	const options: PublicKeyCredentialCreationOptionsJSON = generateRegistrationOptions({
 		rpName,
 		rpID,
 		userID: userId.toString(),
