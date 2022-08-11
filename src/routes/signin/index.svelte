@@ -11,7 +11,7 @@
 
 <div class="loginContainer">
 	<Card padded>
-		<h1>Sign Up</h1>
+		<h1>Sign In</h1>
 
 		<form on:submit|preventDefault={login}>
 			<div class="form">
