@@ -1,4 +1,4 @@
-import { doWithoutTransaction, doWithTransaction } from '$lib/db/postgres';
+import { doWithTransaction } from '$lib/db/postgres';
 
 interface PendingRegistration {
 	id: number;

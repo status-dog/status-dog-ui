@@ -1,4 +1,4 @@
-import { doWithoutTransaction, doWithTransaction } from '$lib/db/postgres';
+import { doWithTransaction } from '$lib/db/postgres';
 import type { NewAuthenticator } from '$lib/webauthn/models';
 
 export async function persistAuthenticator(
