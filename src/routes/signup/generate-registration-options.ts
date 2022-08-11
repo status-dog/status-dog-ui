@@ -6,10 +6,6 @@ import { existsUser } from '$lib/db/user-repo';
 import { generateUserId } from '$lib/db/user_ids';
 import { persistRegistration } from '$lib/db/pending-registrations-repo';
 
-function setUserCurrentChallenge(user: UserModel, challenge: string) {
-	console.info('TODO');
-}
-
 interface CreationOptionsParams {
 	email: string;
 }

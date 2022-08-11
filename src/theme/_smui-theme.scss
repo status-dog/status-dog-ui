@@ -21,6 +21,8 @@ body {
 	font-family: 'Roboto', sans-serif;
 	padding: 0;
 	margin: 0;
+
+	--error-text-color: #{theme.$error};
 }
 
 a {

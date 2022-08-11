@@ -2,11 +2,14 @@
 	import Button from '@smui/button';
 	import Card from '@smui/card';
 	import Textfield from '@smui/textfield';
+	import { startRegistration } from '@simplewebauthn/browser';
 
 	let email = '';
+	let error: string | undefined = undefined;
 
 	async function signUp() {
-		const response = await fetch('/signup/generate-registration-options', {
+		error = undefined;
+		const optionsResponse = await fetch('/signup/generate-registration-options', {
 			method: 'POST',
 			credentials: 'same-origin',
 			headers: {
@@ -14,7 +17,27 @@
 			},
 			body: JSON.stringify({ email }),
 		});
-		console.info('sign up');
+
+		if (optionsResponse.status === 200) {
+			try {
+				const attResponse = await startRegistration(await optionsResponse.json());
+				const verificationReponse = await fetch('/signup/verify-registration', {
+					method: 'POST',
+					credentials: 'same-origin',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(attResponse),
+				});
+				const verificationJSON = await verificationReponse.json();
+				console.log(verificationJSON);
+			} catch (e) {
+				console.error(e);
+				error = 'Failed to use authenticator';
+			}
+		} else {
+			error = 'Failed to generate registration options';
+		}
 	}
 </script>
 
@@ -22,18 +45,28 @@
 	<Card padded>
 		<h1>Sign Up</h1>
 
-		<form on:submit|preventDefault={signUp}>
-			<div class="form">
-				<Textfield variant="outlined" bind:value={email} label="Email" type="email" required />
-				<div>
-					<Button type="submit" variant="raised">Sign up</Button>
+		<div class="content">
+			<form on:submit|preventDefault={signUp}>
+				<div class="form">
+					<Textfield variant="outlined" bind:value={email} label="Email" type="email" required />
+					<div>
+						<Button type="submit" variant="raised">Sign up</Button>
+					</div>
 				</div>
-			</div>
-		</form>
+			</form>
+			{#if error !== undefined}
+				<div class="error">
+					{error}
+				</div>
+			{/if}
+		</div>
 	</Card>
 </div>
 
 <style>
+	.error {
+		color: var(--error-text-color);
+	}
 	.signUpContainer {
 		margin-left: auto;
 		margin-right: auto;
@@ -42,6 +75,12 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+	}
+
+	.content {
+		display: flex;
+		gap: 8px;
+		flex-direction: column;
 	}
 
 	.form {
