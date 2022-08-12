@@ -1,16 +1,16 @@
 import type {
-	PublicKeyCredentialUserEntityJSON,
-	RegistrationCredentialJSON,
-} from '@simplewebauthn/typescript-types';
+  PublicKeyCredentialUserEntityJSON,
+  RegistrationCredentialJSON,
+} from "@simplewebauthn/typescript-types";
 
 export interface RegistrationVerificationBody {
-	user: PublicKeyCredentialUserEntityJSON;
-	attResponse: RegistrationCredentialJSON;
+  user: PublicKeyCredentialUserEntityJSON;
+  attResponse: RegistrationCredentialJSON;
 }
 
 export interface CreationOptionsParams {
-	email: string;
+  email: string;
 }
 export interface AuthenticationOptionsParams {
-	email: string;
+  email: string;
 }

@@ -1,55 +1,55 @@
 <script lang="ts">
-	import type { AuthenticationOptionsParams } from '$lib/signup/model';
+  import type { AuthenticationOptionsParams } from "$lib/signup/model";
 
-	import Button from '@smui/button';
-	import Card from '@smui/card';
-	import Textfield from '@smui/textfield';
+  import Button from "@smui/button";
+  import Card from "@smui/card";
+  import Textfield from "@smui/textfield";
 
-	let email = '';
+  let email = "";
 
-	async function login() {
-		const optionsRequestBody: AuthenticationOptionsParams = { email };
-		const optionsResponse = await fetch('/signin/generate-authentication-options', {
-			method: 'POST',
-			credentials: 'same-origin',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(optionsRequestBody),
-		});
-	}
+  async function login() {
+    const optionsRequestBody: AuthenticationOptionsParams = { email };
+    const optionsResponse = await fetch("/signin/generate-authentication-options", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(optionsRequestBody),
+    });
+  }
 </script>
 
 <div class="loginContainer">
-	<Card padded>
-		<h1>Sign In</h1>
+  <Card padded>
+    <h1>Sign In</h1>
 
-		<form on:submit|preventDefault={login}>
-			<div class="form">
-				<Textfield variant="outlined" bind:value={email} label="Email" type="email" required />
-				<div>
-					<Button type="submit" variant="raised">Login</Button>
-				</div>
-			</div>
-		</form>
-	</Card>
+    <form on:submit|preventDefault={login}>
+      <div class="form">
+        <Textfield variant="outlined" bind:value={email} label="Email" type="email" required />
+        <div>
+          <Button type="submit" variant="raised">Login</Button>
+        </div>
+      </div>
+    </form>
+  </Card>
 </div>
 
 <style>
-	.loginContainer {
-		margin-left: auto;
-		margin-right: auto;
-		max-width: 500px;
-		width: 90%;
-		height: 100vh;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-	}
+  .loginContainer {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 500px;
+    width: 90%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 
-	.form {
-		display: flex;
-		flex-direction: column;
-		gap: 12px;
-	}
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
 </style>
