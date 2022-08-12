@@ -58,3 +58,14 @@ export async function getAuthenticators(userId: number): Promise<Authenticator[]
     return result.rows.map(rowToAuthenticator);
   });
 }
+
+export async function updateCounter(authenticatorId: number, counter: number): Promise<void> {
+  console.info("Update counter");
+  return await doWithTransaction(async (connection) => {
+    await connection.query("update statusdog.authenticators set counter = $1 where id = $2", [
+      counter,
+      authenticatorId,
+    ]);
+    return;
+  });
+}

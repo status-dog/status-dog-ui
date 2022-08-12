@@ -1,4 +1,4 @@
-import { getAuthenticator } from "$lib/db/authenticator-repo";
+import { getAuthenticator, updateCounter } from "$lib/db/authenticator-repo";
 import { getUserById } from "$lib/db/user-repo";
 import { rpID, statusDogOrigin } from "$lib/webauthn/models";
 import { verifyAuthenticationResponse } from "@simplewebauthn/server";
@@ -31,6 +31,7 @@ export const POST: RequestHandler<Record<string, string>, string> = async ({ req
       },
     });
     if (verification.verified) {
+      await updateCounter(authenticator.id, verification.authenticationInfo.newCounter);
       return { status: 200, body: "{}" };
     } else {
       return { status: 401, body: "{}" };
