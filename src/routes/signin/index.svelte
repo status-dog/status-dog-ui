@@ -4,10 +4,18 @@
   import Button from "@smui/button";
   import Card from "@smui/card";
   import Textfield from "@smui/textfield";
+  import { startAuthentication } from "@simplewebauthn/browser";
+  import type {
+    AuthenticationCredentialJSON,
+    PublicKeyCredentialRequestOptionsJSON,
+  } from "@simplewebauthn/typescript-types";
+
+  let error: string | undefined = undefined;
 
   let email = "";
 
   async function login() {
+    error = undefined;
     const optionsRequestBody: AuthenticationOptionsParams = { email };
     const optionsResponse = await fetch("/signin/generate-authentication-options", {
       method: "POST",
@@ -17,6 +25,17 @@
       },
       body: JSON.stringify(optionsRequestBody),
     });
+    if (optionsResponse.status === 200) {
+      try {
+        const options: PublicKeyCredentialRequestOptionsJSON = await optionsResponse.json();
+        const attResponse: AuthenticationCredentialJSON = await startAuthentication(options);
+        console.log(attResponse);
+      } catch (e) {
+        error = "Failed to authenticat.";
+      }
+    } else {
+      error = "Failed to generate authentication challenge";
+    }
   }
 </script>
 
@@ -24,18 +43,28 @@
   <Card padded>
     <h1>Sign In</h1>
 
-    <form on:submit|preventDefault={login}>
-      <div class="form">
-        <Textfield variant="outlined" bind:value={email} label="Email" type="email" required />
-        <div>
-          <Button type="submit" variant="raised">Login</Button>
+    <div class="content">
+      <form on:submit|preventDefault={login}>
+        <div class="form">
+          <Textfield variant="outlined" bind:value={email} label="Email" type="email" required />
+          <div>
+            <Button type="submit" variant="raised">Login</Button>
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+      {#if error !== undefined}
+        <div class="error">
+          {error}
+        </div>
+      {/if}
+    </div>
   </Card>
 </div>
 
 <style>
+  .error {
+    color: var(--error-text-color);
+  }
   .loginContainer {
     margin-left: auto;
     margin-right: auto;
@@ -51,5 +80,11 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+  }
+
+  .content {
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
   }
 </style>
