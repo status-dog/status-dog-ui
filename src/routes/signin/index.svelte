@@ -38,6 +38,7 @@
           body: JSON.stringify(attResponse),
         });
       } catch (e) {
+        console.error(e);
         error = "Failed to authenticat.";
       }
     } else {
