@@ -28,11 +28,12 @@ export const POST: RequestHandler<Record<string, string>, string> = async ({ req
 				credentialID,
 				credentialPublicKey,
 				counter,
-				transports: params.attResponse.transports,
+				transports: params.attResponse.transports || null,
 			};
 			await persistUser({
-				id: params.user.id,
+				id: parseInt(params.user.id),
 				email: params.user.displayName,
+				currentChallenge: null,
 			});
 			await persistAuthenticator(newAuthenticator, parseInt(params.user.id));
 			return { status: 200, body: '{}' };

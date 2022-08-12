@@ -31,7 +31,7 @@ export type Authenticator = {
 	counter: number;
 	// SQL: `VARCHAR(255)` and store string array as a CSV string
 	// ['usb' | 'ble' | 'nfc' | 'internal']
-	transports?: AuthenticatorTransportFuture[];
+	transports: AuthenticatorTransportFuture[] | null;
 };
 
 export type NewAuthenticator = Omit<Authenticator, 'id'>;

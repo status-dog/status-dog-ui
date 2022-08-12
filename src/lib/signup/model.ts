@@ -11,3 +11,6 @@ export interface RegistrationVerificationBody {
 export interface CreationOptionsParams {
 	email: string;
 }
+export interface AuthenticationOptionsParams {
+	email: string;
+}

@@ -1,11 +1,22 @@
 <script lang="ts">
+	import type { AuthenticationOptionsParams } from '$lib/signup/model';
+
 	import Button from '@smui/button';
 	import Card from '@smui/card';
 	import Textfield from '@smui/textfield';
 
 	let email = '';
-	function login() {
-		console.info('login');
+
+	async function login() {
+		const optionsRequestBody: AuthenticationOptionsParams = { email };
+		const optionsResponse = await fetch('/signin/generate-authentication-options', {
+			method: 'POST',
+			credentials: 'same-origin',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(optionsRequestBody),
+		});
 	}
 </script>
 

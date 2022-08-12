@@ -5,7 +5,7 @@
 	import { startRegistration } from '@simplewebauthn/browser';
 	import type { PublicKeyCredentialCreationOptionsJSON } from '@simplewebauthn/typescript-types';
 	import type { CreationOptionsParams } from '$lib/signup/model';
-import { goto } from '$app/navigation';
+	import { goto } from '$app/navigation';
 
 	let email = '';
 	let error: string | undefined = undefined;
@@ -39,8 +39,8 @@ import { goto } from '$app/navigation';
 					},
 					body: JSON.stringify(requestBody),
 				});
-				if(verificationReponse.status === 200) {
-					goto("/signin");
+				if (verificationReponse.status === 200) {
+					goto('/signin');
 				} else {
 					error = 'Verification failed.';
 				}
@@ -48,9 +48,9 @@ import { goto } from '$app/navigation';
 				console.error(e);
 				error = 'Failed to use authenticator';
 			}
-		} else if(optionsResponse.status === 409) {
+		} else if (optionsResponse.status === 409) {
 			error = 'User with that email already exists.';
-		 } else {
+		} else {
 			error = 'Failed to generate registration options';
 		}
 	}

@@ -1,5 +1,5 @@
-import { doWithTransaction } from '$lib/db/postgres';
-import type { NewAuthenticator } from '$lib/webauthn/models';
+import { doWithoutTransaction, doWithTransaction } from '$lib/db/postgres';
+import type { Authenticator, NewAuthenticator } from '$lib/webauthn/models';
 
 export async function persistAuthenticator(
 	authenticator: NewAuthenticator,
@@ -14,10 +14,31 @@ export async function persistAuthenticator(
 				authenticator.credentialID.toString('base64'),
 				authenticator.credentialPublicKey,
 				authenticator.counter,
-				authenticator.transports || null,
+				authenticator.transports,
 				userId,
 			]
 		);
 		return;
+	});
+}
+
+export async function getAuthenticators(userId: number): Promise<Authenticator[]> {
+	console.info('Check if user exists.');
+	return await doWithoutTransaction(async (connection) => {
+		const result = await connection.query(
+			'select id, name, credential_id, credential_public_key, counter, transports from statusdog.authenticators where user_id = $1',
+			[userId]
+		);
+		return result.rows.map((row) => {
+			const authenticator: Authenticator = {
+				id: row.id,
+				name: row.name,
+				credentialID: Buffer.from(row.credential_id, 'base64'),
+				credentialPublicKey: row.credential_public_key,
+				counter: row.counter,
+				transports: row.transports,
+			};
+			return authenticator;
+		});
 	});
 }
