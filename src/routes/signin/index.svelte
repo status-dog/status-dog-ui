@@ -29,7 +29,14 @@
       try {
         const options: PublicKeyCredentialRequestOptionsJSON = await optionsResponse.json();
         const attResponse: AuthenticationCredentialJSON = await startAuthentication(options);
-        console.log(attResponse);
+        const verificationReponse = await fetch("/signin/verify-authentication", {
+          method: "POST",
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(attResponse),
+        });
       } catch (e) {
         error = "Failed to authenticat.";
       }
@@ -48,7 +55,7 @@
         <div class="form">
           <Textfield variant="outlined" bind:value={email} label="Email" type="email" required />
           <div>
-            <Button type="submit" variant="raised">Login</Button>
+            <Button type="submit" variant="raised">Sign in</Button>
           </div>
         </div>
       </form>
@@ -57,6 +64,9 @@
           {error}
         </div>
       {/if}
+      <div>
+        Don't have an account? <a href="/signup">Sign up</a> instead.
+      </div>
     </div>
   </Card>
 </div>

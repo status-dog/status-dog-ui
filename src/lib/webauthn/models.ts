@@ -32,6 +32,8 @@ export type Authenticator = {
   // SQL: `VARCHAR(255)` and store string array as a CSV string
   // ['usb' | 'ble' | 'nfc' | 'internal']
   transports: AuthenticatorTransportFuture[] | null;
+
+  userId: number;
 };
 
 export type NewAuthenticator = Omit<Authenticator, "id">;

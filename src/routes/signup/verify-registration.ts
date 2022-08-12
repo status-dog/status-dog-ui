@@ -29,13 +29,14 @@ export const POST: RequestHandler<Record<string, string>, string> = async ({ req
         credentialPublicKey,
         counter,
         transports: params.attResponse.transports || null,
+        userId: parseInt(params.user.id),
       };
       await persistUser({
         id: parseInt(params.user.id),
         email: params.user.displayName,
         currentChallenge: null,
       });
-      await persistAuthenticator(newAuthenticator, parseInt(params.user.id));
+      await persistAuthenticator(newAuthenticator);
       return { status: 200, body: "{}" };
     } else {
       return { status: 400, body: "Failed" };

@@ -74,6 +74,9 @@
           {error}
         </div>
       {/if}
+      <div>
+        Already have an account? <a href="/signin">Sign in</a> instead.
+      </div>
     </div>
   </Card>
 </div>

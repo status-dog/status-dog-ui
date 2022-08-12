@@ -1,5 +1,6 @@
 import { doWithoutTransaction, doWithTransaction } from "$lib/db/postgres";
 import type { User } from "$lib/user/user";
+import type { QueryResultRow } from "pg";
 
 export async function existsUser(email: string): Promise<boolean> {
   console.info("Check if user exists.");
@@ -12,8 +13,31 @@ export async function existsUser(email: string): Promise<boolean> {
   });
 }
 
+function rowToUser(row: QueryResultRow): User {
+  return {
+    id: row.id,
+    email: row.email,
+    currentChallenge: row.current_challenge,
+  };
+}
+
+export async function getUserById(userId: number): Promise<User | undefined> {
+  console.info("Get user by id");
+  return await doWithoutTransaction(async (connection) => {
+    const result = await connection.query(
+      "select id, email, current_challenge  from statusdog.users where id = $1",
+      [userId]
+    );
+    if (result.rowCount !== 1) {
+      return undefined;
+    } else {
+      return rowToUser(result.rows[0]);
+    }
+  });
+}
+
 export async function getUser(email: string): Promise<User | undefined> {
-  console.info("Check if user exists.");
+  console.info("Get user by email");
   return await doWithoutTransaction(async (connection) => {
     const result = await connection.query(
       "select id, email, current_challenge  from statusdog.users where email = $1",
@@ -22,12 +46,7 @@ export async function getUser(email: string): Promise<User | undefined> {
     if (result.rowCount !== 1) {
       return undefined;
     } else {
-      const row = result.rows[0];
-      return {
-        id: row.id,
-        email: row.email,
-        currentChallenge: row.current_challenge,
-      };
+      return rowToUser(result.rows[0]);
     }
   });
 }
