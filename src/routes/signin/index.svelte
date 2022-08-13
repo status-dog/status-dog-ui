@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { AuthenticationOptionsParams } from "$lib/signup/model";
 
+  import { session } from "$app/stores";
   import Button from "@smui/button";
   import Card from "@smui/card";
   import Textfield from "@smui/textfield";
@@ -9,6 +10,7 @@
     AuthenticationCredentialJSON,
     PublicKeyCredentialRequestOptionsJSON,
   } from "@simplewebauthn/typescript-types";
+  import type { UserSession } from "$lib/session/user-session";
 
   let error: string | undefined = undefined;
 
@@ -37,6 +39,10 @@
           },
           body: JSON.stringify(attResponse),
         });
+        if (verificationReponse.status === 200) {
+          const userSession: UserSession = await verificationReponse.json();
+          $session.userSession = userSession;
+        }
       } catch (e) {
         console.error(e);
         error = "Failed to authenticat.";

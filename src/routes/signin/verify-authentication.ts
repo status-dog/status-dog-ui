@@ -1,11 +1,17 @@
 import { getAuthenticator, updateCounter } from "$lib/db/authenticator-repo";
+import { persistSession } from "$lib/db/session-repo";
 import { getUserById } from "$lib/db/user-repo";
+import { createSessionCookie } from "$lib/session/cookie";
+import type { UserSession } from "$lib/session/user-session";
 import { rpID, statusDogOrigin } from "$lib/webauthn/models";
 import { verifyAuthenticationResponse } from "@simplewebauthn/server";
 import type { AuthenticationCredentialJSON } from "@simplewebauthn/typescript-types";
 import type { RequestHandler } from "@sveltejs/kit";
+import crypto from "crypto";
 
-export const POST: RequestHandler<Record<string, string>, string> = async ({ request }) => {
+export const POST: RequestHandler<Record<string, string>, UserSession | string> = async ({
+  request,
+}) => {
   const params: AuthenticationCredentialJSON = await request.json();
   console.info("Verify authentication");
   const authenticator = await getAuthenticator(params.id);
@@ -31,8 +37,21 @@ export const POST: RequestHandler<Record<string, string>, string> = async ({ req
       },
     });
     if (verification.verified) {
+      const sessionId = crypto.randomUUID();
+      const sessionCookie = createSessionCookie(sessionId);
       await updateCounter(authenticator.id, verification.authenticationInfo.newCounter);
-      return { status: 200, body: "{}" };
+      await persistSession(sessionId, user.id);
+      const userSession: UserSession = {
+        userId: user.id,
+        email: user.email,
+      };
+      return {
+        status: 200,
+        body: userSession,
+        headers: {
+          "Set-Cookie": sessionCookie,
+        },
+      };
     } else {
       return { status: 401, body: "{}" };
     }
