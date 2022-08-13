@@ -12,6 +12,15 @@ export async function persistSession(sessionId: string, userId: number): Promise
   });
 }
 
+export async function deleteSession(sessionId: string): Promise<void> {
+  console.info("Delete session");
+  return await doWithTransaction(async (connection) => {
+    await connection.query("delete from statusdog.sessions where expires < now()");
+    await connection.query("delete from statusdog.sessions where session_id  = $1", [sessionId]);
+    return;
+  });
+}
+
 export async function getUserIdForSession(sessionId: string): Promise<number | null> {
   console.info("Get user for session");
   return await doWithoutTransaction(async (connection) => {

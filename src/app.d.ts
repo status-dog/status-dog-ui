@@ -9,6 +9,7 @@ declare global {
   declare namespace App {
     interface Locals {
       userId?: number;
+      sessionId?: string;
     }
     // interface Platform {}
     interface Session {

@@ -1,5 +1,4 @@
 import type {
-  AuthenticationCredentialJSON,
   PublicKeyCredentialUserEntityJSON,
   RegistrationCredentialJSON,
 } from "@simplewebauthn/typescript-types";

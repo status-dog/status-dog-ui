@@ -18,6 +18,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 
   if (userId) {
     event.locals.userId = userId;
+    event.locals.sessionId = sessionId;
   }
 
   return await resolve(event);

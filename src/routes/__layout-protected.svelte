@@ -28,7 +28,9 @@
       <Title>Status Dog</Title>
     </Section>
     <Section align="end" toolbar>
-      <IconButton class="material-icons" aria-label="Bookmark this page">logout</IconButton>
+      <IconButton href="/signout" class="material-icons" aria-label="Bookmark this page"
+        >logout</IconButton
+      >
     </Section>
   </Row>
 </TopAppBar>

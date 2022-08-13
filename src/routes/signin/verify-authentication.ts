@@ -24,7 +24,7 @@ export const POST: RequestHandler<Record<string, string>, UserSession | string> 
   }
 
   try {
-    const verification = await verifyAuthenticationResponse({
+    const verification = verifyAuthenticationResponse({
       credential: params,
       expectedChallenge: user.currentChallenge,
       expectedOrigin: statusDogOrigin,
