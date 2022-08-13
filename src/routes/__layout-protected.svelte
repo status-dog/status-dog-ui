@@ -2,14 +2,14 @@
   import type { Load } from "@sveltejs/kit";
 
   export const load: Load = ({ session, props }) => {
-    if (session.userSession) {
+    if (!session.userSession) {
       return {
         status: 302,
-        redirect: "/dashboard",
+        redirect: "/signin",
       };
     }
 
-    return props;
+    return props
   };
 </script>
 
