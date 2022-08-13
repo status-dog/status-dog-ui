@@ -1,4 +1,7 @@
-import { ClientBase, Pool } from "pg";
+import type { ClientBase } from "pg";
+import pgPkg from "pg";
+
+const { Pool } = pgPkg;
 
 export const pool = new Pool({
   // TODO use env variables
