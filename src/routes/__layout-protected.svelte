@@ -9,7 +9,7 @@
       };
     }
 
-    return props
+    return props;
   };
 </script>
 
