@@ -34,7 +34,7 @@ function rowToAuthenticator(row: QueryResultRow): Authenticator {
 }
 
 export async function getAuthenticator(credentialId: string): Promise<Authenticator | null> {
-  console.info("Get authenticator", credentialId);
+  console.info("Get authenticator");
   return await doWithoutTransaction(async (connection) => {
     const result = await connection.query(
       "select id, name, credential_id, credential_public_key, counter, transports, user_id from statusdog.authenticators where credential_id = $1",

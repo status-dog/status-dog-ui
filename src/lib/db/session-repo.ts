@@ -3,6 +3,7 @@ import { doWithoutTransaction, doWithTransaction } from "$lib/db/postgres";
 export async function persistSession(sessionId: string, userId: number): Promise<void> {
   console.info("Persist pending registration");
   return await doWithTransaction(async (connection) => {
+    await connection.query("delete from statusdog.sessions where expires < now()");
     await connection.query("insert into statusdog.sessions (session_id, user_id) values ($1, $2)", [
       sessionId,
       userId,
