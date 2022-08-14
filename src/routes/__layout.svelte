@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
   import type { Load } from "@sveltejs/kit";
 
-  export const load: Load = ({ session, props }) => {
+  export const load: Load = ({ session }) => {
     if (session.userSession) {
       return {
         status: 302,
@@ -9,7 +9,7 @@
       };
     }
 
-    return props;
+    return {};
   };
 </script>
 

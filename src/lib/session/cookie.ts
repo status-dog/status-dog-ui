@@ -1,3 +1,4 @@
+import { dev } from "$app/env";
 import cookie from "cookie";
 
 export const SESSION_COOKIE_NAME = "session_id";
@@ -7,7 +8,7 @@ export function createSessionCookie(sessionId: string) {
     path: "/",
     httpOnly: true,
     sameSite: "strict",
-    secure: process.env["NODE_ENV"] === "production",
+    secure: !dev,
     maxAge: 60 * 60 * 24 * 30,
   });
 }
