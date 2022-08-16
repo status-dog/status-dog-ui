@@ -11,6 +11,7 @@
     PublicKeyCredentialRequestOptionsJSON,
   } from "@simplewebauthn/typescript-types";
   import type { UserSession } from "$lib/session/user-session";
+  import { goto } from "$app/navigation";
 
   let error: string | undefined = undefined;
 
@@ -42,10 +43,11 @@
         if (verificationReponse.status === 200) {
           const userSession: UserSession = await verificationReponse.json();
           $session.userSession = userSession;
+          goto("/dashboard");
         }
       } catch (e) {
         console.error(e);
-        error = "Failed to authenticat.";
+        error = "Failed to authenticate.";
       }
     } else {
       error = "Failed to generate authentication challenge";

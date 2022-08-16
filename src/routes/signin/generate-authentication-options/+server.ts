@@ -1,14 +1,11 @@
+import { json } from "@sveltejs/kit";
 import { getAuthenticators } from "$lib/db/authenticator-repo";
 import { getUser, persistUserChallenge } from "$lib/db/user-repo";
 import type { AuthenticationOptionsParams } from "$lib/signup/model";
 import { generateAuthenticationOptions } from "@simplewebauthn/server";
-import type { PublicKeyCredentialRequestOptionsJSON } from "@simplewebauthn/typescript-types";
-import type { RequestHandler } from "@sveltejs/kit";
+import type { RequestHandler } from "./$types";
 
-export const POST: RequestHandler<
-  Record<string, string>,
-  PublicKeyCredentialRequestOptionsJSON | string
-> = async ({ request }) => {
+export const POST: RequestHandler = async ({ request }) => {
   const params: AuthenticationOptionsParams = await request.json();
   console.info("Generating authentication options");
 
@@ -28,8 +25,8 @@ export const POST: RequestHandler<
     await persistUserChallenge(user.id, options.challenge);
 
     console.info(user, authenticators);
-    return { status: 200, body: options };
+    return json(options);
   } else {
-    return { status: 400 };
+    return new Response(undefined, { status: 400 });
   }
 };

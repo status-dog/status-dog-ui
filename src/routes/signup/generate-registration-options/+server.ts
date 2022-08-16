@@ -1,4 +1,5 @@
-import type { RequestHandler } from "@sveltejs/kit";
+import { json } from "@sveltejs/kit";
+import type { RequestHandler } from "./$types";
 import { generateRegistrationOptions } from "@simplewebauthn/server";
 import { rpID, rpName } from "$lib/webauthn/models";
 import type { PublicKeyCredentialCreationOptionsJSON } from "@simplewebauthn/typescript-types";
@@ -7,18 +8,12 @@ import { generateUserId } from "$lib/db/user_ids";
 import { persistRegistration } from "$lib/db/pending-registrations-repo";
 import type { CreationOptionsParams } from "$lib/signup/model";
 
-export const POST: RequestHandler<
-  Record<string, string>,
-  PublicKeyCredentialCreationOptionsJSON | string
-> = async ({ request }) => {
+export const POST: RequestHandler = async ({ request }) => {
   const params: CreationOptionsParams = await request.json();
   console.info("Generating registration options");
 
   if (await existsUser(params.email)) {
-    return {
-      status: 409,
-      body: "A user with that email already exists.",
-    };
+    return new Response("A user with that email already exists.", { status: 409 });
   }
   const userId = await generateUserId();
 
@@ -48,5 +43,5 @@ export const POST: RequestHandler<
     challenge: options.challenge,
   });
 
-  return { status: 200, body: options };
+  return json(options);
 };

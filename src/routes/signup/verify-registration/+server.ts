@@ -4,9 +4,9 @@ import { persistUser } from "$lib/db/user-repo";
 import type { RegistrationVerificationBody } from "$lib/signup/model";
 import { rpID, statusDogOrigin, type NewAuthenticator } from "$lib/webauthn/models";
 import { verifyRegistrationResponse } from "@simplewebauthn/server";
-import type { RequestHandler } from "@sveltejs/kit";
+import type { RequestHandler } from "./$types";
 
-export const POST: RequestHandler<Record<string, string>, string> = async ({ request }) => {
+export const POST: RequestHandler = async ({ request }) => {
   const params: RegistrationVerificationBody = await request.json();
   console.info("Verify registration");
 
@@ -37,12 +37,12 @@ export const POST: RequestHandler<Record<string, string>, string> = async ({ req
         currentChallenge: null,
       });
       await persistAuthenticator(newAuthenticator);
-      return { status: 200, body: "{}" };
+      return new Response("{}");
     } else {
-      return { status: 400, body: "Failed" };
+      return new Response("Failed", { status: 400 });
     }
   } catch (error) {
     console.error(error);
-    return { status: 400, body: "Failed" };
+    return new Response("Failed", { status: 400 });
   }
 };

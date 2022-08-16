@@ -1,13 +1,13 @@
 import { deleteSession } from "$lib/db/session-repo";
 import { SESSION_COOKIE_NAME } from "$lib/session/cookie";
-import type { RequestHandler } from "@sveltejs/kit";
+import type { RequestHandler } from "./$types";
 import * as cookie from "cookie";
 
 export const GET: RequestHandler = async ({ locals }) => {
   if (locals.sessionId) {
     await deleteSession(locals.sessionId);
   }
-  return {
+  return new Response(undefined, {
     status: 303,
     headers: {
       "Set-Cookie": cookie.serialize(SESSION_COOKIE_NAME, "", {
@@ -17,5 +17,5 @@ export const GET: RequestHandler = async ({ locals }) => {
       }),
       location: "/",
     },
-  };
+  });
 };

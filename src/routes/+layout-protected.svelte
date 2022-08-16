@@ -1,18 +1,3 @@
-<script context="module" lang="ts">
-  import type { Load } from "@sveltejs/kit";
-
-  export const load: Load = ({ session }) => {
-    if (!session.userSession) {
-      return {
-        status: 302,
-        redirect: "/signin",
-      };
-    }
-
-    return {};
-  };
-</script>
-
 <script lang="ts">
   import type { TopAppBarComponentDev } from "@smui/top-app-bar";
   import TopAppBar, { Row, Section, Title, AutoAdjust } from "@smui/top-app-bar";
