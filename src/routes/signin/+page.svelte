@@ -9,7 +9,6 @@
     AuthenticationCredentialJSON,
     PublicKeyCredentialRequestOptionsJSON,
   } from "@simplewebauthn/typescript-types";
-  import type { UserSession } from "$lib/session/user-session";
   import { goto } from "$app/navigation";
 
   let error: string | undefined = undefined;
@@ -40,7 +39,7 @@
           body: JSON.stringify(attResponse),
         });
         if (verificationReponse.status === 200) {
-          const userSession: UserSession = await verificationReponse.json();
+          await verificationReponse.json();
           goto("/dashboard");
         }
       } catch (e) {
