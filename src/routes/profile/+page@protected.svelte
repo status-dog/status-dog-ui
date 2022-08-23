@@ -3,7 +3,7 @@
 </script>
 
 {#if $page.data.userSession}
-  <h1>Dashboard</h1>
+  <h1>Profile</h1>
   <p>Hello {$page.data.userSession.email}</p>
-  <a href="/profile">Profile</a>
+  <a href="/dashboard">Dashboard</a>
 {/if}

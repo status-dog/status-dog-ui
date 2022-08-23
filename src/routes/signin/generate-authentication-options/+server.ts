@@ -24,7 +24,6 @@ export const POST: RequestHandler = async ({ request }) => {
 
     await persistUserChallenge(user.id, options.challenge);
 
-    console.info(user, authenticators);
     return json(options);
   } else {
     return new Response(undefined, { status: 400 });

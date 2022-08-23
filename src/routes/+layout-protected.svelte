@@ -20,5 +20,13 @@
   </Row>
 </TopAppBar>
 <AutoAdjust {topAppBar}>
-  <slot />
+  <div class="content">
+    <slot />
+  </div>
 </AutoAdjust>
+
+<style>
+  .content {
+    margin: 32px;
+  }
+</style>

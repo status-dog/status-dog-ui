@@ -25,7 +25,6 @@
     if (optionsResponse.status === 200) {
       try {
         const options: PublicKeyCredentialCreationOptionsJSON = await optionsResponse.json();
-        console.info(options.user);
         const attResponse = await startRegistration(options);
         const requestBody = {
           user: options.user,
@@ -58,7 +57,7 @@
 
 <div class="signUpContainer">
   <Card padded>
-    <h1>Sign Up</h1>
+    <h2>Sign Up</h2>
 
     <div class="content">
       <form on:submit|preventDefault={signUp}>

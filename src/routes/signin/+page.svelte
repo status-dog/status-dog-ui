@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { AuthenticationOptionsParams } from "$lib/signup/model";
 
-  import { session } from "$app/stores";
   import Button from "@smui/button";
   import Card from "@smui/card";
   import Textfield from "@smui/textfield";
@@ -42,7 +41,6 @@
         });
         if (verificationReponse.status === 200) {
           const userSession: UserSession = await verificationReponse.json();
-          $session.userSession = userSession;
           goto("/dashboard");
         }
       } catch (e) {
@@ -57,7 +55,7 @@
 
 <div class="loginContainer">
   <Card padded>
-    <h1>Sign In</h1>
+    <h2>Sign In</h2>
 
     <div class="content">
       <form on:submit|preventDefault={login}>

@@ -12,9 +12,6 @@ declare global {
       sessionId?: string;
     }
     // interface Platform {}
-    interface Session {
-      userSession?: UserSession;
-    }
     // interface Stuff {}
   }
 }

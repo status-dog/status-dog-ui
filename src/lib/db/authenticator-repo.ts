@@ -3,7 +3,7 @@ import type { Authenticator, NewAuthenticator } from "$lib/webauthn/models";
 import type { QueryResultRow } from "pg";
 
 export async function persistAuthenticator(authenticator: NewAuthenticator): Promise<void> {
-  console.info("Persist authenticator", authenticator);
+  console.info("Persist authenticator");
   return await doWithTransaction(async (connection) => {
     await connection.query(
       "INSERT INTO statusdog.authenticators (name, credential_id, credential_public_key, counter, transports, user_id) VALUES($1, $2, $3, $4, $5, $6)",

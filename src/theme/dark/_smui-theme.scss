@@ -11,6 +11,8 @@
   $error: color-palette.$red-700
 );
 
+@use "@material/typography/index" as typography;
+
 html,
 body {
   background-color: theme.$background;
@@ -18,10 +20,6 @@ body {
 }
 
 body {
-  font-family: "Roboto", sans-serif;
-  padding: 0;
-  margin: 0;
-
   --error-text-color: #{theme.$error};
 }
 a {
